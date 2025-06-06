@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Ulang Tahun, Karintus</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      overflow-x: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    h1 {
+      margin-top: 60px;
+      font-size: 2.5rem;
+      animation: fadeIn 1.5s ease;
+    }
+
+    #tombolBuka {
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: #ff6699;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #tombolBuka:hover {
+      background: #e05588;
+    }
+
+    .section {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      display: none;
+      animation: fadeIn 2s ease;
+    }
+
+    #fotoSlide img {
+      width: 90%;
+      max-width: 400px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .popup {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      padding: 10px 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bintang"></canvas>
+
+<h1>🎂 Selamat Ulang Tahun, Karintus 💖</h1>
+<button id="tombolBuka" onclick="bukaSurat()">Klik untuk Lihat Hadiah 🎁</button>
+
+<div id="fotoSlide" class="section">
+  <img id="slideImg" src="foto1.jpg" alt="Kenangan Bersama">
+</div>
+
+<div class="section popup" id="surat">
+  Sayangku yang tercinta yg cantik,Imut dan Ucul<br><br>
+  Semoga di hari yg spesial ini, di berikan umur yg panjang, sehat jiwa dan raga, semoga apa yg di usahkan bisa tercapai, sehat-sehat terus Bakaaa.  
+  Semoga ulang tahun ini membawa banyak kebahagiaan, cinta, dan harapan baru.AMIN 
+  <br><br>
+  I LOVE YOU KARINTUS,SALAM DARI JAUH HEHEH. 💞  
+  <br><br>
+  — PETRUSMU 💌
+</div>
+
+<audio id="musik" loop>
+  <source src="lagu.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+  function bukaSurat() {
+    document.getElementById("surat").style.display = "block";
+    document.getElementById("fotoSlide").style.display = "block";
+    document.getElementById("musik").play();
+
+    const images = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      document.getElementById("slideImg").src = images[index];
+    }, 3000);
+  }
+
+  // Efek bintang
+  const canvas = document.getElementById("bintang");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let stars = [];
+  for (let i = 0; i < 100; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5 + 0.5,
+      d: Math.random() * 1
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    for (let i = 0; i < stars.length; i++) {
+      let s = stars[i];
+      ctx.moveTo(s.x, s.y);
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+    }
+    ctx.fill();
+    updateStars();
+  }
+
+  function updateStars() {
+    for (let i = 0; i < stars.length; i++) {
+      stars[i].y += stars[i].d;
+      if (stars[i].y > canvas.height) {
+        stars[i].y = 0;
+        stars[i].x = Math.random() * canvas.width;
+      }
+    }
+  }
+
+  setInterval(drawStars, 50);
+
+  window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
